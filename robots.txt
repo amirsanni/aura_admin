@@ -1,0 +1,13 @@
+User-Agent: *
+Disallow: 
+Disallow: /system
+Disallow: /application/config
+Disallow: /application/cache
+Disallow: /application/core
+Disallow: /application/helpers
+Disallow: /application/hooks
+Disallow: /application/language
+Disallow: /application/libraries
+Disallow: /application/logs
+Disallow: /application/models
+Disallow: /application/third_party

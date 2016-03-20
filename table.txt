@@ -1,0 +1,174 @@
+CREATE TABLE `admin` (
+  `id` int(3) NOT NULL AUTO_INCREMENT,
+  `first_name` varchar(25) NOT NULL,
+  `last_name` varchar(25) NOT NULL,
+  `email` varchar(255) NOT NULL UNIQUE,
+  `mobile1` varchar(15) NOT NULL UNIQUE,
+  `mobile2` varchar(15) NOT NULL,
+  `password` char(60) NOT NULL,
+  `role` char(5) NOT NULL,
+  `created_on` datetime NOT NULL,
+  `last_login` datetime NOT NULL,
+  `last_edited` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `account_status` char(1) NOT NULL DEFAULT '1',
+  `deleted` char(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY(id)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(25) NOT NULL UNIQUE,
+  `first_name` varchar(20) NOT NULL,
+  `last_name` varchar(20) NOT NULL,
+  `email` varchar(100) NOT NULL UNIQUE,
+  `profession` varchar(100) NOT NULL,
+  `mobile_1` varchar(15) NOT NULL UNIQUE,
+  `mobile_2` varchar(15) DEFAULT NULL,
+  `password` char(60) NOT NULL,
+  `logo` varchar(100) DEFAULT NULL,
+  `street` text,
+  `city` varchar(20) DEFAULT NULL,
+  `state` varchar(20) DEFAULT NULL,
+  `country` varchar(20) DEFAULT NULL,
+  `account_status` char(1) NOT NULL DEFAULT '1',
+  `signup_date` datetime NOT NULL,
+  `last_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `login_status` char(1) NOT NULL DEFAULT '0',
+  `last_login` datetime DEFAULT NULL,
+  `deleted` char(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY(id)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+
+CREATE TABLE IF NOT EXISTS `aura_admin_sessions` (
+	`id` varchar(40) NOT NULL,
+	`ip_address` varchar(45) NOT NULL,
+	`timestamp` int(10) unsigned DEFAULT 0 NOT NULL,
+	`data` blob NOT NULL,
+	KEY `ci_sessions_timestamp` (`timestamp`)
+);
+
+CREATE TABLE pr_categories(
+	id TINYINT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(50) NOT NULL UNIQUE,
+    date_added DATETIME NOT NULL,
+    added_by INT NOT NULL,
+    PRIMARY KEY(id),
+    FOREIGN KEY(added_by) REFERENCES admin(id) ON DELETE NO ACTION
+)ENGINE = INNODB
+
+
+CREATE TABLE projects(
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    title VARCHAR(50) NOT NULL,
+    description TEXT,
+    default_image VARCHAR(100) NULL,
+    user_id INT NOT NULL,
+    category_id TINYINT NOT NULL,
+    tags VARCHAR(50) NULL,
+    date_created DATETIME NOT NULL,
+    last_edited TIMESTAMP,
+    PRIMARY KEY(id),
+    FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY(category_id) REFERENCES pr_categories(id)
+)ENGINE=INNODB;
+
+
+
+CREATE TABLE pr_images(
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    project_id INT UNSIGNED NOT NULL,
+    image_link VARCHAR(100) NOT NULL,
+    date_created TIMESTAMP,
+    PRIMARY KEY(id),
+    FOREIGN KEY(project_id) REFERENCES projects(id) ON DELETE CASCADE
+)ENGINE=INNODB
+
+
+
+
+CREATE TABLE pr_comments(
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    comment_body TEXT NOT NULL,
+    username VARCHAR(20) NULL,
+    project_id INT UNSIGNED NOT NULL,
+    date_added DATETIME NOT NULL,
+    last_modified TIMESTAMP,
+    edited CHAR(1) NOT NULL DEFAULT 0,
+    PRIMARY KEY(id),
+    FOREIGN KEY(project_id) REFERENCES projects(id) ON DELETE CASCADE
+)ENGINE=INNODB
+
+
+
+CREATE TABLE blogs(
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    title VARCHAR(200) NOT NULL UNIQUE,
+    body LONGTEXT NOT NULL,
+    author VARCHAR(30) NOT NULL,
+    default_image VARCHAR(100) NULL,
+    uploaded_by INT NOT NULL,
+    date_created DATETIME NOT NULL,
+    last_edited TIMESTAMP,
+    published CHAR(1) NOT NULL DEFAULT 0,
+    edited_after_published CHAR(1) NOT NULL DEFAULT 0,
+    PRIMARY KEY(id),
+    FOREIGN KEY(uploaded_by) REFERENCES admin(id)
+)ENGINE=INNODB
+
+
+
+CREATE TABLE bl_comments(
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    comment_body TEXT NOT NULL,
+    username VARCHAR(20) NULL,
+    blog_id INT UNSIGNED NOT NULL,
+    date_added DATETIME NOT NULL,
+    last_modified TIMESTAMP,
+    edited CHAR(1) NOT NULL DEFAULT 0,
+    PRIMARY KEY(id),
+    FOREIGN KEY(blog_id) REFERENCES blogs(id) ON DELETE CASCADE
+)ENGINE=INNODB
+
+
+
+CREATE TABLE bl_replies(
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    reply_body TEXT NOT NULL,
+    username VARCHAR(20) NULL,
+    comment_id INT UNSIGNED NOT NULL,
+    date_added DATETIME NOT NULL,
+    last_modified TIMESTAMP,
+    edited CHAR(1) NOT NULL DEFAULT 0,
+    PRIMARY KEY(id),
+    FOREIGN KEY(comment_id) REFERENCES bl_comments(id) ON DELETE CASCADE
+)ENGINE=INNODB
+
+
+
+CREATE TABLE pr_replies(
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    reply_body TEXT NOT NULL,
+    username VARCHAR(20) NULL,
+    comment_id INT UNSIGNED NOT NULL,
+    date_added DATETIME NOT NULL,
+    last_modified TIMESTAMP,
+    edited CHAR(1) NOT NULL DEFAULT 0,
+    PRIMARY KEY(id),
+    FOREIGN KEY(comment_id) REFERENCES pr_comments(id) ON DELETE CASCADE
+)ENGINE=INNODB
+
+
+
+CREATE TABLE IF NOT EXISTS `pr_tags` (
+  `id` tinyint(4) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL UNIQUE,
+  `date_added` datetime NOT NULL,
+  `added_by` int(11) NOT NULL,
+  PRIMARY KEY(id),
+  FOREIGN KEY(added_by) REFERENCES admin(id) ON DELETE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;

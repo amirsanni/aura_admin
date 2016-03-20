@@ -1,0 +1,52 @@
+CREATE TABLE customers(
+	custId BIGINT(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, 
+	firstName VARCHAR(20) NOT NULL, 
+	lastName VARCHAR(20) NOT NULL, 
+	otherName VARCHAR(30), 
+	gender CHAR(1) NOT NULL,
+	mobile1 VARCHAR(15) NOT NULL UNIQUE, 
+	mobile2 VARCHAR(15), 
+	email VARCHAR(50), 
+	address TEXT NOT NULL,
+	city VARCHAR(30) NOT NULL,
+	state VARCHAR(30) NOT NULL,
+	country VARCHAR(30) NOT NULL,
+	signupDate DATETIME NOT NULL, 
+	lastEdited TIMESTAMP, 
+	PRIMARY KEY(id) 
+)
+
+
+CREATE TABLE items(
+	id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    name VARCHAR(25) NOT NULL UNIQUE,
+    code VARCHAR(10) NOT NULL UNIQUE,
+    description TEXT,
+    unitPrice INT(6) NOT NULL,
+    quantity INT(6) NOT NULL,
+    dateAdded DATETIME NOT NULL,
+    lastUpdated TIMESTAMP,
+    PRIMARY KEY(custId)
+)
+
+
+CREATE TABLE transactions(
+	transId BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    itemName VARCHAR(30) NOT NULL,
+    itemCode BIGINT(6),
+    description TEXT,
+    quantity VARCHAR(6) NOT NULL,
+    unitPrice VARCHAR(9) NOT NULL,
+    totalPrice VARCHAR(9) NOT NULL,
+    amountTendered VARCHAR(9) NOT NULL,
+    changeDue VARCHAR(9) NOT NULL,
+	modeOfPayment VARCHAR(20) NOT NULL,
+    transType CHAR(1) NOT NULL,
+    customerId BIGINT(6) UNSIGNED,
+    customerName VARCHAR(40) NOT NULL,
+    receiptLink VARCHAR(100),
+    staffId BIGINT UNSIGNED NOT NULL,
+    transDate DATETIME NOT NULL,
+	lastUpdated TIMESTAMP,
+    PRIMARY KEY(transId)
+)
