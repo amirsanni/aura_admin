@@ -1,6 +1,10 @@
 'use strict';
 
 $(document).ready(function(){
+    checkDocumentVisibility(function(){
+        checkLogin(appRoot+"misc/check_session_status", "GET", "", "");
+    });//check document visibility in order to confirm user's log in status
+    
     
     //load all admin once the page is ready
     //function header: laad_(url)

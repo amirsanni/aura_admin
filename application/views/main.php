@@ -35,8 +35,8 @@ defined('BASEPATH') OR exit('');
                 </div>
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav navbar-left visible-xs">
+                <div class="collapse navbar-collapse navbarIcons" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-left">
                         <li class="<?= $pageTitle == 'Dashboard' ? 'active' : '' ?>">
                             <a href="<?= site_url('dashboard') ?>">
                                 <i class="fa fa-home"></i>
@@ -49,25 +49,25 @@ defined('BASEPATH') OR exit('');
                                 Users
                             </a>
                         </li>
+                        <li class="<?= $pageTitle == 'Projects' ? 'active' : '' ?>">
+                            <a href="<?= site_url('projects') ?>">
+                                <i class="fa fa-tasks"></i>
+                                Projects
+                            </a>
+                        </li>
                         <?php if($this->session->admin_role === "Super"): ?>
                         <li class="<?= $pageTitle == 'Administrators' ? 'active' : '' ?>">
                             <a href="<?= site_url('administrators') ?>">
-                                <i class="fa fa-user"></i>
+                                <i class="fa fa-wrench"></i>
                                 Admin Management
                             </a>
                         </li>
                         <?php endif; ?>
                     </ul>
-                    <form class="navbar-form navbar-left" role="search">
-                        <div class="form-group">
-                            <input type="search" id="globeSearch" class="form-control" placeholder="Search">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </form>
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                <i class="fa fa-user navbarIcons"></i> <span class="caret"></span>
+                                <i class="fa fa-user"></i> <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
                                 <li class="dropdown-menu-header text-center">
@@ -99,38 +99,9 @@ defined('BASEPATH') OR exit('');
 
         <div class="container-fluid">
             <div class="row content">
-                <!-- Left sidebar -->
-                <div class="col-sm-2 sidenav hidden-xs">
-                    <br>
-                    <ul class="nav nav-pills nav-stacked pointer">
-                        <li class="<?= $pageTitle == 'Dashboard' ? 'active' : '' ?>">
-                            <a href="<?= site_url('dashboard') ?>">
-                                <i class="fa fa-home"></i>
-                                Dashboard
-                            </a>
-                        </li>
-                        <li class="<?= $pageTitle == 'Users' ? 'active' : '' ?>">
-                            <a href="<?= site_url('users') ?>">
-                                <i class="fa fa-users"></i>
-                                Users
-                            </a>
-                        </li>
-                        <?php if($this->session->admin_role === "Super"): ?>
-                        <li class="<?= $pageTitle == 'Administrators' ? 'active' : '' ?>">
-                            <a href="<?= site_url('administrators') ?>">
-                                <i class="fa fa-user"></i>
-                                Admin Management
-                            </a>
-                        </li>
-                        <?php endif; ?>
-                    </ul>
-                    <br>
-                </div>
-                <!-- Left sidebar ends -->
                 <br>
-
                 <!-- Main content -->
-                <div class="col-sm-10">
+                <div class="col-sm-12">
                     <?= isset($pageContent) ? $pageContent : "" ?>
                 </div>
                 <!-- Main content ends -->
@@ -156,5 +127,48 @@ defined('BASEPATH') OR exit('');
             </div>
         </div>
         <!--Modal end-->
+        
+        
+        <!---Login Modal--->
+        <div class="modal fade" role='dialog' data-backdrop='static' id='logInModal'>
+            <div class="modal-dialog">
+                <!---- Log in div below----->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button class="close closeLogInModal">&times;</button>
+                        <h4 class="text-center">Log In</h4>
+                        <div id="logInModalFMsg" class="text-center errMsg"></div>
+                    </div>
+                    <div class="modal-body">
+                        <form name="logInModalForm">
+                            <div class="row">
+                                <div class="col-sm-12 form-group">
+                                    <label for='logInModalEmail' class="control-label">E-mail</label>
+                                    <input type="email" id='logInModalEmail' class="form-control checkField" placeholder="E-mail" autofocus>
+                                    <span class="help-block errMsg" id="logInModalEmailErr"></span>
+                                </div>
+                                <div class="col-sm-12 form-group">
+                                    <label for='logInModalPassword' class="control-label">Password</label>
+                                    <input type="password" id='logInModalPassword'class="form-control checkField" placeholder="Password">
+                                    <span class="help-block errMsg" id="logInModalPasswordErr"></span>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-sm-6 pull-left">
+                                    <input type="checkbox" class="control-label" id='remMe'> Remember me
+                                </div>
+                                <div class="col-sm-4"></div>
+                                <div class="col-sm-2 pull-right">
+                                    <button id='loginModalSubmit' class="btn btn-primary">Log in</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!---- End of log in div----->
+            </div>
+        </div>
+        <!---end of Login Modal-->
     </body>
 </html>

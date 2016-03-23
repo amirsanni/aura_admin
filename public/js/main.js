@@ -59,7 +59,39 @@ $(document).ready(function(){
     ********************************************************************************************************************************
     */
    
-    
+    //WHEN THE SUBMIT BUTTON ON THE LOG IN MODAL IS CLICKED
+    $("#loginModalSubmit").click(function(e){
+        e.preventDefault();
+        
+        var email = $("#logInModalEmail").val();
+        var password = $("#logInModalPassword").val();
+       
+       if(!email || !password){
+           //display error message
+           $("#logInFMsg").css('color', 'red').html("Please enter both your email and password");
+           return;
+       }
+       
+       
+       //display progress message
+       $("#logInFMsg").css('color', 'black').html("Authenticating. Please wait...");
+       
+       
+       //call function to handle log in and get the returned data through a callback
+       handleLogin(appRoot+"home/login", email, password, function(returnedData){
+           if(returnedData.status === 1){
+                $("#logInFMsg").css('color', 'green').html(returnedData.msg);
+
+                location.reload(true);
+            }
+
+            else{
+                //display error message
+                $("#logInFMsg").css('color', 'red').html(returnedData.msg);
+            }
+       });
+       
+    });
    
     /*
     ********************************************************************************************************************************
@@ -244,4 +276,121 @@ function scrollPageToTop(time){
     $('html, body').animate({
         scrollTop: $("html").offset().top
     }, time);
+}
+
+
+
+/**
+ * Check user's log in status (when page has focus) and trigger login modal if user is not logged in
+ * @returns {undefined}
+ */
+function checkLogin(url, ajaxMethod, textToDisplay, callback){
+    if(document.hidden || document.onfocusout || window.onpagehide || window.onblur){
+        console.log("Window has lost focus");
+    }
+
+    else{//if window has focus
+        $.ajax({
+            url: url,
+            method: ajaxMethod
+        }).done(function(returnedData){
+            //if a callback was sent, call it.
+            if(typeof callback === "function"){
+                callback(returnedData.status);
+            }
+            
+            else{//else, trigger the modal to allow user to log in
+                if(returnedData.status === 0){
+                    var msg = textToDisplay ? textToDisplay : "Your session has expired. Please log in to continue";
+                    
+                    triggerLoginForm(msg, {'color':'red'});//trigger log in form
+                }
+            }
+        });
+    }
+}
+
+
+
+/**
+ * call function "functionToCall" if document has focus
+ * Check Andy E's answer: https://stackoverflow.com/questions/1060008/is-there-a-way-to-detect-if-a-browser-window-is-not-currently-active
+ * @param {type} functionToCall
+ * @returns {undefined}
+ */
+function checkDocumentVisibility(functionToCall){
+    var hidden = "hidden";
+    
+    //detect if page has focus and check login status if it does
+    if(hidden in document){//for browsers that support visibility API
+        $(document).on("visibilitychange", functionToCall);
+    }
+    
+    else if ((hidden = "mozHidden") in document){
+        document.addEventListener("mozvisibilitychange", functionToCall);
+    }
+
+    else if ((hidden = "webkitHidden") in document){
+        document.addEventListener("webkitvisibilitychange", functionToCall);
+    }
+
+    else if ((hidden = "msHidden") in document){
+        document.addEventListener("msvisibilitychange", functionToCall);
+    }
+
+    // IE 9 and lower:
+    else if ("onfocusout" in document){
+        document.onfocusin = document.onfocusout = functionToCall;
+    }
+
+    // All others:
+    else{
+      window.onpageshow = window.onpagehide = window.onfocus = window.onblur = functionToCall;
+    }
+}
+
+
+function triggerLoginForm(msg, cssObj){
+    $("#logInModalFMsg").css(cssObj).html(msg);
+
+    //launch the login/signup modal
+    $("#logInModal").modal('show');
+}
+
+
+
+/**
+ * 
+ * @param {type} url
+ * @param {type} email
+ * @param {type} password
+ * @param {type} callback
+ * @returns {undefined}
+ */
+function handleLogin(url, email, password, callback){
+    var jsonToReturn = "";
+    
+    $.ajax(url, {
+        method: "POST",
+        data: {email:email, password:password}
+    }).done(function(returnedData){
+        if(returnedData.status === 1){
+            jsonToReturn = {status:1, msg:"Authenticated."};
+            typeof callback === "function" ? callback(jsonToReturn) : "";
+        }
+
+        else{
+            //display error messages
+            jsonToReturn = {status:0, msg:"Invalid email/password combination"};
+            typeof callback === "function" ? callback(jsonToReturn) : "";
+        }
+    }).fail(function(){
+        //set error message based on the internet connectivity of the user
+        var msg = (navigator.onLine) ? "Unable to log you in at the moment. Please try again later." 
+            : "Log in failed. Please check your internet connection and try again later.";
+        
+        //display error messages
+        jsonToReturn = {status:0, msg:msg};
+        typeof callback === "function" ? callback(jsonToReturn) : "";
+    });
 }

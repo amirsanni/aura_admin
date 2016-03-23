@@ -1,7 +1,9 @@
 'use strict';
 
 $(document).ready(function(){
-    //checkDocumentVisibility(checkLogin);//check document visibility in order to confirm user's log in status
+    checkDocumentVisibility(function(){
+        checkLogin(appRoot+"misc/check_session_status", "GET", "", "");
+    });//check document visibility in order to confirm user's log in status
     
     //load all users once the page is ready
     //function header: lau_(url)
