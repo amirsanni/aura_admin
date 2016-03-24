@@ -285,29 +285,23 @@ function scrollPageToTop(time){
  * @returns {undefined}
  */
 function checkLogin(url, ajaxMethod, textToDisplay, callback){
-    if(document.hidden || document.onfocusout || window.onpagehide || window.onblur){
-        console.log("Window has lost focus");
-    }
-
-    else{//if window has focus
-        $.ajax({
-            url: url,
-            method: ajaxMethod
-        }).done(function(returnedData){
-            //if a callback was sent, call it.
-            if(typeof callback === "function"){
-                callback(returnedData.status);
-            }
-            
-            else{//else, trigger the modal to allow user to log in
-                if(returnedData.status === 0){
-                    var msg = textToDisplay ? textToDisplay : "Your session has expired. Please log in to continue";
-                    
-                    triggerLoginForm(msg, {'color':'red'});//trigger log in form
-                }
-            }
-        });
-    }
+	$.ajax({
+		url: url,
+		method: ajaxMethod
+	}).done(function(returnedData){
+		//if a callback was sent, call it.
+		if(typeof callback === "function"){
+			callback(returnedData.status);
+		}
+		
+		else{//else, trigger the modal to allow user to log in
+			if(returnedData.status === 0){
+				var msg = textToDisplay ? textToDisplay : "Your session has expired. Please log in to continue";
+				
+				triggerLoginForm(msg, {'color':'red'});//trigger log in form
+			}
+		}
+	});
 }
 
 
