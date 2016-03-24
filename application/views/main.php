@@ -36,7 +36,7 @@ defined('BASEPATH') OR exit('');
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse navbarIcons" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav navbar-left">
+                    <ul class="nav navbar-nav navbar-left visible-xs">
                         <li class="<?= $pageTitle == 'Dashboard' ? 'active' : '' ?>">
                             <a href="<?= site_url('dashboard') ?>">
                                 <i class="fa fa-home"></i>
@@ -99,9 +99,43 @@ defined('BASEPATH') OR exit('');
 
         <div class="container-fluid">
             <div class="row content">
+			<!-- Left sidebar -->
+                <div class="col-sm-2 sidenav hidden-xs">
+                    <br>
+                    <ul class="nav nav-pills nav-stacked pointer">
+                        <li class="<?= $pageTitle == 'Dashboard' ? 'active' : '' ?>">
+                            <a href="<?= site_url('dashboard') ?>">
+                                <i class="fa fa-home"></i>
+                                Dashboard
+                            </a>
+                        </li>
+                        <li class="<?= $pageTitle == 'Users' ? 'active' : '' ?>">
+                            <a href="<?= site_url('users') ?>">
+                                <i class="fa fa-users"></i>
+                                Users
+                            </a>
+                        </li>
+                        <li class="<?= $pageTitle == 'Projects' ? 'active' : '' ?>">
+                            <a href="<?= site_url('projects') ?>">
+                                <i class="fa fa-tasks"></i>
+                                Projects
+                            </a>
+                        </li>
+                        <?php if($this->session->admin_role === "Super"): ?>
+                        <li class="<?= $pageTitle == 'Administrators' ? 'active' : '' ?>">
+                            <a href="<?= site_url('administrators') ?>">
+                                <i class="fa fa-wrench"></i>
+                                Admin Management
+                            </a>
+                        </li>
+                        <?php endif; ?>
+                    </ul>
+                    <br>
+                </div>
+                <!-- Left sidebar ends -->
                 <br>
                 <!-- Main content -->
-                <div class="col-sm-12">
+                <div class="col-sm-10">
                     <?= isset($pageContent) ? $pageContent : "" ?>
                 </div>
                 <!-- Main content ends -->
