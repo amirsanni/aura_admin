@@ -388,3 +388,12 @@ function handleLogin(url, email, password, callback){
         typeof callback === "function" ? callback(jsonToReturn) : "";
     });
 }
+
+
+
+
+function scrollToDiv(divElem){
+    $('html, body').animate({
+        scrollTop: $(divElem).offset().top
+    }, 1000);
+}

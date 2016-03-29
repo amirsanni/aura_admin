@@ -27,7 +27,7 @@ class Genmod extends CI_Model{
         
         $this->db->query($q, [$colVal, $whereColVal]);
         
-        if($this->db->affected_rows() > 0){
+        if(!$this->db->error()['message']){
             return TRUE;
         }
         

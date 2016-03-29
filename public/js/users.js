@@ -102,6 +102,34 @@ $(document).ready(function(){
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
+    //TO SUSPEND A USER
+    $("#allUsers").on('click', '.suspendUser', function(){
+        var clickedElemIcon = $(this).children('i');
+        
+        var userId = $(this).parent().prev().prop("id").split("-")[1];
+        var ns = clickedElemIcon.hasClass('fa fa-toggle-on') ? 0 : 1;
+        
+        if(userId){
+            
+            clickedElemIcon.removeClass().addClass(spinnerClass);
+            
+            $.ajax({
+                url: appRoot+"users/cuas",
+                method: "GET",
+                data: {user_id:userId, ns:ns}
+            }).done(function(returnedData){
+                if(returnedData.status === 1){
+                    clickedElemIcon.removeClass(spinnerClass);
+                    
+                    clickedElemIcon.addClass(ns === 1 ? "fa fa-toggle-on" : "fa fa-toggle-off");
+                }
+                
+                else{
+                    
+                }
+            });
+        }
+    });
     
     
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

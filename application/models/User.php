@@ -112,7 +112,7 @@ class User extends CI_Model{
      * @return boolean
      */
     public function get_all($order_by, $order_format, $start, $limit){        
-        $this->db->select('id, username, first_name, last_name, email, profession, mobile_1, mobile_2');
+        $this->db->select('id, username, first_name, last_name, email, profession, mobile_1, mobile_2, account_status');
         $this->db->order_by($order_by, $order_format);
         $this->db->limit($limit, $start);
         

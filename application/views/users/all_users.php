@@ -16,6 +16,7 @@ defined('BASEPATH') OR exit('Get out');
                     <th>Profession</th>
                     <th>E-mail</th>
                     <th>Phone Number(s)</th>
+                    <th>Account Status</th>
                 </tr>
             </thead>
             <tbody>
@@ -31,6 +32,11 @@ defined('BASEPATH') OR exit('Get out');
                         <td id="uListProf-<?=$get->id?>"><?=$get->profession?></td>
                         <td><a href="mailto:<?=$get->email?>" id="uListEmail-<?=$get->id?>"><?=$get->email?></a></td>
                         <td id="uListTel-<?=$get->id?>"><?=trim($get->mobile_1 . "&nbsp;&nbsp;". $get->mobile_2)?></td>
+                        <td>
+                            <a class="pointer suspendUser">
+                                <i class="<?= $get->account_status == 1 ? 'fa fa-toggle-on' : 'fa fa-toggle-off'?>"></i>
+                            </a>
+                        </td>
                     </tr>
                     <?php $sn++;?>
                 <?php endforeach;?>

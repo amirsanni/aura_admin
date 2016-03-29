@@ -61,7 +61,7 @@ class Users extends CI_Controller{
         $start = $page_number == 0 ? 0 : ($page_number - 1) * $limit;//start from 0 if $page_number is 0, else start from the next iteration
         
         //call setPaginationConfig($totalRows, $urlToCall, $limit, $attributes, $uri_segment=3) in genlib to configure pagination
-        $config = $this->genlib->setPaginationConfig($total_users, "users/lau_", $limit, ['class'=>'lnp'], "");
+        $config = $this->genlib->setPaginationConfig($total_users, "users/lau_", $limit, ['class'=>'lnp'], 3);
         
         $this->pagination->initialize($config);//initialize the library class
         
@@ -428,10 +428,25 @@ class Users extends CI_Controller{
     ********************************************************************************************************************************
     */
     
-    
-    
-    
-    /*
+    /**
+     * cuas = "Change user account status"
+     */
+    public function cuas(){
+        $user_id = $this->input->get('user_id', TRUE);
+        $new_status = $this->input->get('ns', TRUE);
+
+        //updateTableCol($tableName, $colName, $colVal, $whereCol, $whereColVal)
+        $updated = $this->genmod->updatetablecol('users', 'account_status', $new_status, 'id', $user_id);
+
+        $json['status'] = $updated ? 1 : 0;
+
+        $this->output->set_content_type('application/json')->set_output(json_encode($json));
+    }
+
+
+
+
+   /*
     ********************************************************************************************************************************
     ********************************************************************************************************************************
     ********************************************************************************************************************************
