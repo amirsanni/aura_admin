@@ -27,7 +27,7 @@ defined('BASEPATH') OR exit('Get out of here');
                     </div>
                     <div class="col-sm-4 form-inline form-group-sm">
                         Sort by 
-                        <select id="userListSortBy" class="form-control">
+                        <select id="blogListSortBy" class="form-control">
                             <option value="title-ASC" selected>Title (A to Z)</option>
                             <option value="title-DESC">Title (Z to A)</option>
                             <option value="created-ASC">Date Created (Ascending)</option>
