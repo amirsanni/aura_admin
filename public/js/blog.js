@@ -107,7 +107,6 @@ $(document).ready(function(){
     //handles the addition of new blog details .i.e. when "add blog" button is clicked   $("#addBlogSubmit").click(function(e){    ...$('#addBlogSubmit').on('click', 'div', function(e) {
        $("#addBlogSubmit").click(function(){ 
        	confirm("I am an alert box!");
-        e.preventDefault();
         
         //reset all error msgs in case they are set
         changeInnerHTML(['titleErr', 'bodyErr', 'authorErr'], "");
@@ -189,15 +188,15 @@ $(document).ready(function(){
                     $("#logoErr").html(returnedData.logo);
                 }
             }).fail(function(){
-                if(!navigator.onLine){
+                if(!navigator.onLine && (appRoot.search("localhost") > -1)){
                     $("#fMsg").css('color', 'red').text("Network error! Pls check your network connection");
                 }
                 
                 else{
-                    $("#fMsg").css('color', 'red').text("Unable to process your reuest at this time");
+                    $("#fMsg").css('color', 'red').text("Unable to process your request at this time");
                 }
             });
-    	});
+    });
     
     
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
