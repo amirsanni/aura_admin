@@ -105,7 +105,8 @@ $(document).ready(function(){
     
     
     //handles the addition of new blog details .i.e. when "add blog" button is clicked   $("#addBlogSubmit").click(function(e){    ...$('#addBlogSubmit').on('click', 'div', function(e) {
-       $("#addBlogSubmit").click(function({ confirm("I am an alert box!");
+       $("#addBlogSubmit").click(function(){ 
+       	confirm("I am an alert box!");
         e.preventDefault();
         
         //reset all error msgs in case they are set
@@ -196,7 +197,7 @@ $(document).ready(function(){
                     $("#fMsg").css('color', 'red').text("Unable to process your reuest at this time");
                 }
             });
-    });
+    	});
     
     
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
