@@ -19,10 +19,12 @@ class Blogs extends CI_Controller {
         $this->load->helper('text');
     }
 
+
+
     public function index() {
 
         $data['pageContent'] = $this->load->view('blogs/blogs', '', TRUE);
-        $data['pageTitle'] = "Blog";
+        $data['pageTitle'] = "Blogs";
 
         $this->load->view('main', $data);
     }
@@ -61,6 +63,10 @@ class Blogs extends CI_Controller {
         $this->output->set_content_type('application/json')->set_output(json_encode($json));
     }
 
+
+
+
+
     public function add() {
         $this->load->helper('form');
         $this->load->library('form_validation');
@@ -87,7 +93,10 @@ class Blogs extends CI_Controller {
 
                 $json['status'] = $inserted_id ? 1 : 0;
                 $json['logo_error'] = $logo_info['logo_error_msg'];
-            } else {
+            } 
+
+
+            else {
 
                 /**
                  * insert info into db
@@ -101,7 +110,10 @@ class Blogs extends CI_Controller {
 
                 $json['status'] = $inserted_id ? 1 : 0;
             }
-        } else {
+        } 
+
+
+        else {
             //return all error messages
             $json = $this->form_validation->error_array(); //get an array of all errors
 
@@ -140,7 +152,10 @@ class Blogs extends CI_Controller {
                 $msg = $this->upload->display_errors();
 
                 $json = ['logo_error_msg' => $msg, 'status' => 0];
-            } else {
+            } 
+
+
+            else {
                 //get array of file info on success
                 $data = $this->upload->data();
 
@@ -150,13 +165,19 @@ class Blogs extends CI_Controller {
 
                 $json = ['status' => 1, 'logo_url' => $logo_url, 'logo_error_msg' => ''];
             }
-        } else {
+        } 
+
+
+        else {
             $json = ['status' => 0, 'logo_error_msg' => "No image was selected"];
         }
 
 
         return $json;
     }
+
+
+
 
     public function update() {
         $this->genlib->ajaxOnly();
@@ -192,7 +213,11 @@ class Blogs extends CI_Controller {
                 $json = $updated ?
                         ['status' => 1, 'msg' => "Blog successfully updated"] :
                         ['status' => 0, 'msg' => "Oops! Unexpected server error! Pls contact your administrator for help. Sorry for the embarrassment"];
-            } else {
+            } 
+
+
+
+            else {
 
                 /**
                  * insert info into db
@@ -206,7 +231,11 @@ class Blogs extends CI_Controller {
                 //$inserted_id ? $this->genlib->sendWelcomeMessage($membershipId, $memberName, set_value('email')) : "";
                 $json = $updated ? ['status' => 1, 'msg' => "Blog successfully updated"] : ['status' => 0, 'msg' => "Oops! Unexpected server error! Pls contact your administrator for help. Sorry for the embarrassment"];
             }
-        } else {
+        } 
+
+
+
+        else {
             //return all error messages
             $json = $this->form_validation->error_array(); //get an array of all errors
 
@@ -237,12 +266,18 @@ class Blogs extends CI_Controller {
         //if title does not exist or it exist but was used by current user
         if (!$blog_with_title || ($blog_with_title == $id)) {
             return TRUE;
-        } else {//if it exist and was used in another blog
+        } 
+
+
+        else {//if it exist and was used in another blog
             $this->form_validation->set_message('crosscheckMobile', 'This number is already used by another user');
 
             return FALSE;
         }
     }
+
+
+
 
     /**
      * To get blog's details for edit/update
@@ -265,7 +300,10 @@ class Blogs extends CI_Controller {
             }
             $json['id'] = $id; 
             $json['status'] = 1;
-        } else {
+        } 
+
+
+        else {
             $json = ['status' => 0];
         }
 
