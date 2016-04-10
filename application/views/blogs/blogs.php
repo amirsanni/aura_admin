@@ -150,6 +150,7 @@ defined('BASEPATH') OR exit('Get out of here');
 							<center><img src="" class="img-responsive" id="prevBlogImg"></center>
                             <label>Blog Image(max file size; 500kb):</label>
                             <input type="file" id='logo' class="form-control">
+							<span class='help-block errMsg' id='logoErr'></span>
                         </div>
                     </div>
                 </form>

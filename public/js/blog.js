@@ -193,7 +193,7 @@ $(document).ready(function(){
                     $("#titleErr").html(returnedData.blogname);
                     $("#bodyErr").html(returnedData.first_name);
                     $("#authorErr").html(returnedData.last_name);
-                    $("#logoErr").html(returnedData.logo);
+                    $("#logoErr").html(returnedData.logo_error);
                 }
             }).fail(function(){
                 if(!navigator.onLine && (appRoot.search("localhost") > -1)){
