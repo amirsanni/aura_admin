@@ -28,13 +28,13 @@ defined('BASEPATH') OR exit('Get out');
                         <td><?=$get->description?></td>
                         <td><?=$get->category?></td>
                         <td><a href="mailto:<?=$get->creator_email?>"><?=$get->username?></a></td>
+                        <td><?=date('jS M, Y h:ia', strtotime($get->date_created))?></td>
                         <td>
                             <a class="pointer pubProj" id="proj-<?=$get->id?>">
                                 <i class="<?= $get->published == 1 ? 'fa fa-toggle-on' : 'fa fa-toggle-off'?>"></i>
                             </a>
                         </td>
-                        <td></td>
-                        <td></td>
+                        <td><button class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>Delete</button></td>
                     </tr>
                     <?php $sn++;?>
                 <?php endforeach;?>
