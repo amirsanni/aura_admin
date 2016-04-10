@@ -35,7 +35,7 @@ defined('BASEPATH') OR exit('Get out');
                         <td id="uListUploaded_by-<?=$get->id?>"><?=$get->username?></td>
                         <td><?=date('jS M, Y h:ma', strtotime($get->date_created))?></td>
                         <td>
-                            <a class="pointer suspendBlog">
+                            <a class="pointer suspendBlog" id="b-<?=$get->id?>">
                                 <i class="<?= $get->published == 1 ? 'fa fa-toggle-on' : 'fa fa-toggle-off'?>"></i>
                             </a>
                         </td>
