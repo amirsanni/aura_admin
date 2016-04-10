@@ -27,6 +27,8 @@ class Blogs extends CI_Controller {
         $this->load->view('main', $data);
     }
 
+
+
     /**
      * lau_ = "Load all blogs"
      */

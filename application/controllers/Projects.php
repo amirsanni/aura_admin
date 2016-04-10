@@ -28,6 +28,8 @@ class Projects extends CI_Controller{
     
     
     public function lap_(){
+        $this->genlib->ajaxOnly();
+        
         //set the sort order
         $order_by = $this->input->get('orderBy', TRUE) ? $this->input->get('orderBy', TRUE) : "date_created";
         $order_format = $this->input->get('orderFormat', TRUE) ? $this->input->get('orderFormat', TRUE) : "DESC";
@@ -53,7 +55,7 @@ class Projects extends CI_Controller{
         $data['links'] = $this->pagination->create_links();//page links
         $data['sn'] = $start+1;
         
-        print_r($data['project_list']);
-        $this->load->view('projects/project_list', $data);//load view
+        //load view
+        $this->load->view('projects/project_list', $data);
     }
 }
