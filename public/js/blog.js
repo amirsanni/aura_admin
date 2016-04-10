@@ -368,6 +368,16 @@ $(document).ready(function(){
         //scroll page to top
         scrollPageToTop();
     });
+    
+    
+    
+    //attach an event listener to the file input for selecting image to attach to blog
+    //used to preview the image before uploading
+    $("#newLogo").change(function(){
+        if($(this).val()){
+            previewImage(this, "logoEdit");//funtion in 'main.js'
+        }
+    });
 });
 
 
