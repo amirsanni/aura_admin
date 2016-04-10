@@ -55,6 +55,12 @@ defined('BASEPATH') OR exit('');
                                 Projects
                             </a>
                         </li>
+                        <li class="<?= $pageTitle == 'Blogs' ? 'active' : '' ?>">
+                            <a href="<?= site_url('blogs') ?>">
+                                <i class="fa fa-rss"></i>
+                                Blogs
+                            </a>
+                        </li>
                         <?php if($this->session->admin_role === "Super"): ?>
                         <li class="<?= $pageTitle == 'Administrators' ? 'active' : '' ?>">
                             <a href="<?= site_url('administrators') ?>">
@@ -119,6 +125,12 @@ defined('BASEPATH') OR exit('');
                             <a href="<?= site_url('projects') ?>">
                                 <i class="fa fa-tasks"></i>
                                 Projects
+                            </a>
+                        </li>
+                        <li class="<?= $pageTitle == 'Blogs' ? 'active' : '' ?>">
+                            <a href="<?= site_url('blogs') ?>">
+                                <i class="fa fa-rss"></i>
+                                Blogs
                             </a>
                         </li>
                         <?php if($this->session->admin_role === "Super"): ?>
