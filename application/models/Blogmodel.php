@@ -13,11 +13,12 @@ class Blogmodel extends CI_Model{
     }
     
     
-        public function addblog($title, $body, $author, $logo){
-        $data = ['title'=>$title, 'body'=>$body, 'author'=>$author, 'logo'=>$logo];
-        
+        public function addblog($title, $body, $author, $default_image){
+        $data = ['title'=>$title, 'body'=>$body, 'author'=>$author, 'default_image'=>$default_image];
+        $sessID = $this->session->userdata('admin_id'); //$_SESSION['admin_id']
+     //   echo $sessID; exit;
         $this->db->set('date_created', 'NOW()', FALSE);
-        $this->db->set('uploaded_by', $session[id], FALSE);
+        $this->db->set('uploaded_by', $sessID, FALSE);
         
         $this->db->insert('blogs', $data);
         
@@ -42,22 +43,17 @@ class Blogmodel extends CI_Model{
     
     /**
      * 
-     * @param type $customerId
-     * @param type $firstName
-     * @param type $lastName
-     * @param type $otherName
-     * @param type $mobile1
-     * @param type $mobile2
-     * @param type $email
-     * @param type $gender
-     * @param type $address
-     * @param type $city
-     * @param type $state
-     * @param type $country
+     * @param type $id
+     * @param type $title
+     * @param type $body
+     * @param type $author
+     * @param type $default_image
      * @return boolean
      */
-    public function update($id, $title, $body, $author, $logo){
-        $data = ['title'=>$title, 'body'=>$body, 'author'=>$author, 'logo'=>$logo];
+    public function update($id, $title, $body, $author, $default_image){
+        $data = $default_image ? ['title'=>$title, 'body'=>$body, 'author'=>$author, 'default_image'=>$default_image] 
+                : 
+            ['title'=>$title, 'body'=>$body, 'author'=>$author];
         
         $this->db->where('id', $id);
         
@@ -84,11 +80,12 @@ class Blogmodel extends CI_Model{
      * @return boolean
      */
     public function get_all($order_by, $order_format, $start, $limit){        
-        $this->db->select('id, username, first_name, last_name, email, profession, mobile_1, mobile_2');
+        $this->db->select('blogs.id, title, body, author, users.username, date_created, last_edited, published');
+        $this->db->join('users', 'users.id=blogs.uploaded_by');
         $this->db->order_by($order_by, $order_format);
         $this->db->limit($limit, $start);
         
-        $run_q = $this->db->get('users');
+        $run_q = $this->db->get('blogs');
         
         if($run_q->num_rows() > 0){
             return $run_q->result();
@@ -135,7 +132,19 @@ class Blogmodel extends CI_Model{
     ********************************************************************************************************************************
     */
     
-    
+    public function getblogdet($id){        
+        $this->db->select('id, title, body, author, default_image');
+        $this->db->where('id', $id);
+        $run_q = $this->db->get('blogs');
+        
+        if($run_q->num_rows() > 0){
+            return $run_q->result();
+        }
+        
+        else{
+            return FALSE;
+        }
+    }
     
     /*
     ********************************************************************************************************************************

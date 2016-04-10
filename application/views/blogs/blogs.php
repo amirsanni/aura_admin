@@ -13,7 +13,7 @@ defined('BASEPATH') OR exit('Get out of here');
                     </div>
                     <div class="col-sm-3 form-inline form-group-sm">
                         <label for="blogListPerPage">Show</label>
-                        <select id="userListPerPage" class="form-control">
+                        <select id="blogListPerPage" class="form-control">
                             <option value="1">1</option>
                             <option value="5">5</option>
                             <option value="10" selected>10</option>
@@ -44,80 +44,70 @@ defined('BASEPATH') OR exit('Get out of here');
             <hr>
             <!-- Header (sort order etc.) ends -->
             
-            <!-- User info -->
-            <div class="row" id="allUsersDiv">
+            <!-- Blog info -->
+            <div class="row" id="allBlogsDiv">
                 <div class="col-sm-12">
-                    <!-- User's list -->
+                    <!-- Blog's list -->
                     <div class="col-sm-12" id="allBlogs"></div>
-                     <!-- User's list end -->
+                     <!-- Blog's list end -->
                     
-                    <!-- User details -->
-                    <div class="col-sm-4" id="blogInfo"></div>
-                     <!-- User details end -->
+                    <div class="col-sm-12 hidden" id="editBlogDiv">
+                        <div class="row">
+                            <i class="fa fa-times pull-right text-danger pointer closeEditBlog"></i>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <center><img src="" id='logoEdit' class="img-responsive" width="600px" height="400px"></center>
+                                <br>
+                                <label>Change Image(max file size; 500kb):</label>
+                                <input type="file" id="newLogo" class="form-control">
+                            </div>
+                        </div>
+                        
+                        <form id='editBlogForm' name='editBlogForm' role='form'>
+                            <div class="row">
+                                <div class="form-group col-sm-12">
+                                    <label for='authorEdit' class="control-label">Author</label>
+                                    <input type="text" id='authorEdit' class="form-control checkField" placeholder="Author">
+                                    <span class="help-block errMsg" id="authorEditErr"></span>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="form-group col-sm-12">
+                                    <label for='titleEdit' class="control-label">Title</label>
+                                    <input type="text" id='titleEdit' class="form-control checkField" placeholder="Title">
+                                    <span class="help-block" id="titleEditErr"></span>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-sm-12">
+                                    <label for='bodyEdit' class="control-label">Body</label>
+                                    <textarea id='bodyEdit' class="form-control checkField" rows="10" cols="40" placeholder="Add Blog Content"></textarea>
+                                    <span class="help-block errMsg" id="bodyEditErr"></span>
+                                </div>
+                            </div>
+
+                            <input type="hidden" id="blogId">
+                            
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <button class="btn btn-primary" id="editBlogSubmit">Update</button>
+                                    <button class="btn btn-danger closeEditBlog">Close</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
-            <!-- User list ends -->
+            <!-- Blog list ends -->
         </div>
     </div>
 </div>
 
-
-
-<!--- A particular user's Projects--->
-<div class="row hidden-print">
-    <div class="col-sm-12 hidden" id="userProjectList">
-        <div class="pwell">
-            <div class="row">
-                <div class="col-sm-12">
-                    <span class="close" style="color:red" id="closeUserProjectList">&times;</span>
-                </div>
-                <div class="col-sm-12">
-                    <h5 class="text-center text-uppercase" id="userProjectsInfo"></h5>
-                </div>
-            </div>
-            <br>
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="col-sm-2" id="userProjectListRange"></div>
-                    <div class="col-sm-3">
-                        Show <select id="userProjectListPerPage">
-                            <option value="1">1</option>
-                            <option value="5">5</option>
-                            <option value="10" selected>10</option>
-                            <option value="15">15</option>
-                            <option value="20">20</option>
-                        </select> per page
-                    </div>
-                    <div class="col-sm-4">
-                        Sort by
-                        <select id="userProjectListSortBy">
-                            <option value="title-ASC" selected>Title(A to Z)</option>
-                            <option value="category-ASC">Category (A to Z)</option>
-                            <option value="date_created-DESC">Date Created(recent first)</option>
-                            <option value="last_edited-DESC">Date Edited(recent first)</option>
-                            <option>---</option>
-                            <option value="title-DESC" selected>Title(Z to A)</option>
-                            <option value="category-DESC">Category (Z to A)</option>
-                            <option value="date_created-ASC">Date Created(oldest first)</option>
-                            <option value="last_edited-ASC">Date Edited(oldest first)</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-3">
-                        <input type="search" id="searchUserProjectList" class="form-control" placeholder="Search...">
-                    </div>
-                </div>
-            </div>
-            <br>
-            <div class="row">
-                <div class="col-sm-12" id="userProjectListTable"></div>
-                <div id="userProjectPaginationLinks" class="text-center"></div>
-            </div>
-        </div>
-    </div>
-</div>
-<!--- End of user's project list--->
-
-<!--- Modal to add new user --->
+<!--- Modal to add new blog --->
 <div class='modal fade' id='addNewBlogModal' role="dialog" data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -157,7 +147,7 @@ defined('BASEPATH') OR exit('Get out of here');
                     
                     <div class="row">
                         <div class="col-sm-12">
-                            <label>Blog Image:</label>
+                            <label>Blog Image(max file size; 500kb):</label>
                             <input type="file" id='logo' class="form-control">
                         </div>
                     </div>
@@ -171,61 +161,5 @@ defined('BASEPATH') OR exit('Get out of here');
         </div>
     </div>
 </div>
-<!--- end of modal to add new user --->
-
-
-<!--- Modal for editing user details --->
-<div class='modal fade' id='editUserModal' role="dialog" data-backdrop="static">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class='modal-header'>
-                <button class="close" data-dismiss='modal'>&times;</button>
-                <h4 class="text-center">Edit Blog Details</h4>
-                <div class="text-center">
-                    <i id="fMsgEditIcon"></i>
-                    <span id="fMsgEdit"></span>
-                </div>
-            </div>
-            <div class="modal-body">
-                <form id='editUserForm' name='editBlogForm' role='form'>
-                    <div class="row">                    
-                    
-                    <div class="row">
-                        <div class="form-group-sm col-sm-4">
-                            <label for='titleEdit' class="control-label">Title</label>
-                            <input type="text" id='titleEdit' class="form-control" placeholder="Title">
-                            <span class="help-block" id="titleEditErr"></span>
-                        </div>
-                    </div>
-                    
-                    <div class="row">
-                        <div class="form-group-sm col-sm-4">
-                            <label for='bodyEdit' class="control-label">Body</label>
-                            <input type="text" id='bodyEdit' class="form-control checkField" placeholder="Body">
-                            <span class="help-block errMsg" id="bodyEditErr"></span>
-                        </div>
-                    </div>
-                    
-                    <div class="row">
-                        <div class="form-group-sm col-sm-4">
-                            <label for='authorEdit' class="control-label">Author</label>
-                            <input type="text" id='authorEdit' class="form-control checkField" placeholder="Author">
-                            <span class="help-block errMsg" id="authorEditErr"></span>
-                        </div>
-                    </div>
-                        
-                    </div>
-                    
-                    <input type="hidden" id="userId">
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="reset" form="editBlogForm" class="btn btn-warning pull-left">Reset Form</button>
-                <button type='button' id='editBlogSubmit' class="btn btn-primary">Update</button>
-                <button type='button' class="btn btn-danger" data-dismiss='modal'>Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!--- end of modal to edit user details --->
+<!--- end of modal to add new blog --->
 <script src="<?=base_url()?>public/js/blog.js"></script>

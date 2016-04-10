@@ -87,15 +87,24 @@ $(document).ready(function(){
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
+    $("#allBlogs").on('click', '.edBlog', function(){
+        var blogId = $(this).attr('id').split('-')[1];
+     //   alert(blogId);
+        editBlog(blogId);
+    });
     
-    
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
-    
+    $(".closeEditBlog").click(function(e){
+        e.preventDefault();
+        
+        $("#allBlogs").removeClass('hidden');
+        $("#editBlogDiv").addClass('hidden');
+    });
     
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -106,7 +115,7 @@ $(document).ready(function(){
     
     //handles the addition of new blog details .i.e. when "add blog" button is clicked   $("#addBlogSubmit").click(function(e){    ...$('#addBlogSubmit').on('click', 'div', function(e) {
        $("#addBlogSubmit").click(function(){ 
-       	confirm("I am an alert box!");
+     //  	confirm("I am an alert box!");
         
         //reset all error msgs in case they are set
         changeInnerHTML(['titleErr', 'bodyErr', 'authorErr'], "");
@@ -216,6 +225,8 @@ $(document).ready(function(){
         var title = $("#titleEdit").val();
         var body = $("#bodyEdit").val();
         var author = $("#authorEdit").val();
+        var logo = document.getElementById('newLogo').files;
+        var blogId = $("#blogId").val();
         
         //ensure all required fields are filled
         if(!title || !body || !author){
@@ -226,47 +237,43 @@ $(document).ready(function(){
             return;
         }
         
-        if(!custId){
-            $("#fMsgEdit").text("An error occured while trying to update blog's details");
+        if(!blogId){
+            displayFlashMsg("An error occured while trying to update blog's details", '', 'red', '');
             return;
         }
         
+        var formInfo = new FormData();
+        
+        for(var i=0; i<logo.length; i++){
+            var l = logo[i];
+            
+            formInfo.append('logo', l);
+        }
+        
+        formInfo.append('title', title);
+        formInfo.append('body', body);
+        formInfo.append('author', author);
+        formInfo.append('id', blogId);
+        
         //display message telling blog action is being processed
-        $("#fMsgEditIcon").attr('class', spinnerClass);
-        $("#fMsgEdit").text(" Updating details...");
+        displayFlashMsg('Updating. Pls wait...', '', 'black', '');
         
         //make ajax request if all is well
         $.ajax({
             method: "POST",
             url: appRoot+"blogs/update",
-            data: {title:title, firstName:firstName, lastName:lastName, otherName:otherName, mobile1:mobile1, mobile2:mobile2, 
-                email:email, gender:gender, address:address, custId:custId, city:city, state:state, country:country,
-                membershipId:membershipId},
+            data: formInfo,
+            cache: false,
+            processData: false,
+            contentType: false,
             success: function(returnedData){
                 $("#fMsgEditIcon").removeClass();//remove spinner
                 
-                if(returnedData.status === 1){
-                    $("#fMsgEdit").css('color', 'green').text(returnedData.msg);
-                    
-                    //reset the form and close the modal
-                    setTimeout(function(){
-                        $("#fMsgEdit").text("");
-                        $("#editCustModal").modal('hide');
-                    }, 2000);
+                if(returnedData.status === 1){                    
+                    changeFlashMsgContent(returnedData.msg, '', 'green', 2000);
                     
                     //reset all error msgs in case they are set
-                    changeInnerHTML(['titleEditErr', 'firstNameEditErr', 'lastNameEditErr', 'mobile1EditErr', 'mobile2EditErr', 
-                        'emailEditErr', 'genderEditErr', 'addressEditErr', 'cityEditErr', 'stateEditErr', 'countryEditErr',
-                        'membershipIdEditErr'], "");
-                    
-                    //refresh customer list table
-                    lab_();
-					
-					//call function to send SMS to blog
-					//sendSMS(msg, numbers) in "main.js"
-					var msgToSendAsSMS = "Your details on our server was successfully modified. Check your email for more info. Thank you.";
-					
-					sendSMS(msgToSendAsSMS, mobile1);
+                    changeInnerHTML(['titleEditErr', 'bodyEditErr', 'authorEditErr'], "");
                     
                 }
                 
@@ -276,18 +283,8 @@ $(document).ready(function(){
 
                     //display individual error messages if applied
                     $("#titleEditErr").html(returnedData.title);
-                    $("#firstNameEditErr").html(returnedData.firstName);
-                    $("#lastNameEditErr").html(returnedData.lastName);
-                    $("#otherNameEditErr").html(returnedData.otherName);
-                    $("#mobile1EditErr").html(returnedData.mobile1);
-                    $("#mobile2EditErr").html(returnedData.mobile2);
-                    $("#emailEditErr").html(returnedData.email);
-                    $("#genderEditErr").html(returnedData.gender);
-                    $("#membershipIdEditErr").html(returnedData.membershipId);
-                    $("#addressEditErr").html(returnedData.address);
-                    $("#cityEditErr").html(returnedData.city);
-                    $("#stateEditErr").html(returnedData.state);
-                    $("#countryEditErr").html(returnedData.country);
+                    $("#bodyEditErr").html(returnedData.body);
+                    $("#authorEditErr").html(returnedData.author);
                 }
             },
             
@@ -306,9 +303,9 @@ $(document).ready(function(){
     
     
     //handles customer search
-    $("#custSearch").on('keyup change', function(e){
+    $("#blogSearch").on('keyup change', function(e){
         e.preventDefault();
-        var value = $("#custSearch").val();
+        var value = $("#blogSearch").val();
         
         if(value){//search only if there is at least one char in input
             $.ajax({
@@ -316,7 +313,7 @@ $(document).ready(function(){
                 url: appRoot+"search/custsearch",
                 data: {v:value},
                 success: function(returnedData){
-                    $("#allCustomers").html(returnedData.custTable);
+                    $("#allBlogs").html(returnedData.custTable);
                 }
             });
         }
@@ -332,32 +329,7 @@ $(document).ready(function(){
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    
-    //searching through a customer's transactions history
-    $("#searchCustTrans").keyup(function(){
-       var value = $("#searchCustTrans").val();
-        var custId = $("#curDisplayedCustId").html();
 
-        if(value){//search only if there is at least a char in input
-            $.ajax({
-                type: "get",
-                url: appRoot+"search/custtranssearch",
-                data: {v:value, custId:custId},
-                success: function(returnedData){
-                    if(returnedData.status === 1){
-                        $("#custTransTable").html(returnedData.custTransTable);
-                    }
-                }
-            });
-        }
-
-        else{
-            vup_();
-        } 
-    });
-    
-    
-    
     /*
      * When the close button is clicked on the div showing the list of a projects created by a blog
      */
@@ -383,35 +355,28 @@ $(document).ready(function(){
 
 /**
  * To show modal to edit customer details
- * @param {type} custId
+ * @param {type} id
  * @returns {undefined}
  */
-function editCust(custId){
-    //show modal, get customer info and populate the form with it
-    $("#editCustModal").modal('show');
-    $("#fMsgEditIcon").attr('class', spinnerClass);
+function editBlog(id){
+    //show modal, get blog details and populate the form with it
+    
+    $("#allBlogs").addClass('hidden');
+    $("#editBlogDiv").removeClass('hidden');
+    $("#fMsgEditIcon").addClass(spinnerClass);
     $("#fMsgEdit").text("Fetching details...");
     
     $.ajax({
         type: "post",
-        url: appRoot+"customers/getcustbio",
-        data: {custId:custId},
+        url: appRoot+"blogs/get_blog_det",
+        data: {id:id},
         success: function(returnedData){
             if(returnedData.status === 1){
                 $("#titleEdit").val(returnedData.title);
-                $("#membershipIdEdit").val(returnedData.membershipId);
-                $("#firstNameEdit").val(returnedData.firstName);
-                $("#lastNameEdit").val(returnedData.lastName);
-                $("#otherNameEdit").val(returnedData.otherName);
-                $("#mobile1Edit").val(returnedData.mobile1);
-                $("#mobile2Edit").val(returnedData.mobile2);
-                $("#emailEdit").val(returnedData.email);
-                $("#genderEdit").val(returnedData.gender);
-                $("#addressEdit").val(returnedData.address);
-                $("#cityEdit").val(returnedData.city);
-                $("#stateEdit").val(returnedData.state);
-                $("#countryEdit").val(returnedData.country);
-                $("#custId").val(custId);
+                $("#bodyEdit").val(returnedData.body);
+                $("#authorEdit").val(returnedData.author);
+                $("#logoEdit").attr('src', returnedData.logo);
+                $("#blogId").val(returnedData.id);
                 
                 $("#fMsgEdit").text("");
                 $("#fMsgEditIcon").removeClass();
@@ -431,7 +396,34 @@ function editCust(custId){
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+//TO UNPUBLISH A BLOG
+    $("#allBlogs").on('click', '.suspendBlog', function(){
+        var clickedElemIcon = $(this).children('i');
+        
+        var blogId = $(this).parent().prev().prop("id").split("-")[1];
+        var ns = clickedElemIcon.hasClass('fa fa-toggle-on') ? 0 : 1;
+        
+        if(blogId){
+            
+            clickedElemIcon.removeClass().addClass(spinnerClass);
+            
+            $.ajax({
+                url: appRoot+"blogs/cbps",
+                method: "GET",
+                data: {id:blogId, ns:ns}
+            }).done(function(returnedData){
+                if(returnedData.status === 1){
+                    clickedElemIcon.removeClass(spinnerClass);
+                    
+                    clickedElemIcon.addClass(ns === 1 ? "fa fa-toggle-on" : "fa fa-toggle-off");
+                }
+                
+                else{
+                    
+                }
+            });
+        }
+    });
 /**
  * gumd = "get blog more details". This includes other than customer's bio
  * @param {type} blogId

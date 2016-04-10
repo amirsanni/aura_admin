@@ -3,11 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp7/htdocs/aura_admin/public/js/users.js</file>
-            <file>file:/C:/xampp7/htdocs/aura_admin/application/models/User.php</file>
-            <file>file:/C:/xampp7/htdocs/aura_admin/application/models/Genmod.php</file>
-            <file>file:/C:/xampp7/htdocs/aura_admin/application/views/users/all_users.php</file>
-            <file>file:/C:/xampp7/htdocs/aura_admin/application/controllers/Users.php</file>
+            <file>file:/C:/wamp/www/aura_admin/application/controllers/Users.php</file>
+            <file>file:/C:/wamp/www/aura_admin/application/models/Genmod.php</file>
+            <file>file:/C:/wamp/www/aura_admin/application/views/blogs/all_blogs.php</file>
+            <file>file:/C:/wamp/www/aura_admin/application/models/Blogmodel.php</file>
+            <file>file:/C:/wamp/www/aura_admin/application/controllers/Blogs.php</file>
+            <file>file:/C:/wamp/www/aura_admin/public/js/blog.js</file>
         </group>
     </open-files>
 </project-private>
