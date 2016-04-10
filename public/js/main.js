@@ -397,3 +397,40 @@ function scrollToDiv(divElem){
         scrollTop: $(divElem).offset().top
     }, 1000);
 }
+
+
+
+/**
+ * Check if browser is connected to the internet (if not on localhost) when an ajax req failed
+ * @param {bool} changeFlashContent whether to display a new flash message or change the content if one is displayed
+ * @returns {undefined}
+ */
+function checkBrowserOnline(changeFlashContent){
+    if((!navigator.onLine) && (appRoot.search('localhost') === -1)){
+        changeFlashContent ? 
+            changeFlashMsgContent('Network Error! Please check your internet connection and try again', '', 'red', '', false) 
+            : 
+            displayFlashMsg('Network Error! Please check your internet connection and try again', '', 'red', '', false);
+    }
+    
+    else{
+        changeFlashContent ? 
+            changeFlashMsgContent('Oops! Bug? Unable to process your request. Please try again or report error', '', 'red', '', false) 
+            : 
+            displayFlashMsg('Oops! Bug? Unable to process your request. Please try again or report error', '', 'red', '', false);
+    }
+}
+
+
+
+function previewImage(fileInput, imgTagId){
+    if (fileInput.files) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#'+imgTagId).attr('src', e.target.result);
+        };
+
+        reader.readAsDataURL(fileInput.files[0]);
+    }
+}
