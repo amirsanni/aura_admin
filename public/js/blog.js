@@ -113,9 +113,8 @@ $(document).ready(function(){
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     
-    //handles the addition of new blog details .i.e. when "add blog" button is clicked   $("#addBlogSubmit").click(function(e){    ...$('#addBlogSubmit').on('click', 'div', function(e) {
+    //handles the addition of new blog details .i.e. when "add blog" button is clicked
        $("#addBlogSubmit").click(function(){ 
-     //  	confirm("I am an alert box!");
         
         //reset all error msgs in case they are set
         changeInnerHTML(['titleErr', 'bodyErr', 'authorErr'], "");
@@ -302,7 +301,7 @@ $(document).ready(function(){
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     
-    //handles customer search
+    //handles blog search
     $("#blogSearch").on('keyup change', function(e){
         e.preventDefault();
         var value = $("#blogSearch").val();
@@ -310,7 +309,7 @@ $(document).ready(function(){
         if(value){//search only if there is at least one char in input
             $.ajax({
                 type: "get",
-                url: appRoot+"search/custsearch",
+                url: appRoot+"search/blogsearch",
                 data: {v:value},
                 success: function(returnedData){
                     $("#allBlogs").html(returnedData.custTable);
@@ -329,25 +328,30 @@ $(document).ready(function(){
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    /*
-     * When the close button is clicked on the div showing the list of a projects created by a blog
-     */
-    $("#closeblogProjectList").click(function(){
-        $("#blogProjectList").addClass('hidden');//hide the div
-        $("#allblogsDiv").removeClass('hidden');
-        
-        //scroll page to top
-        scrollPageToTop();
-    });
     
     
     
-    //attach an event listener to the file input for selecting image to attach to blog
+    //attach an event listener to the file input for selecting image to attach to blog while editing blog
     //used to preview the image before uploading
     $("#newLogo").change(function(){
         if($(this).val()){
             previewImage(this, "logoEdit");//funtion in 'main.js'
+        }
+    });
+	
+	/*
+	***************************************************************************************************************************************
+	***************************************************************************************************************************************
+	***************************************************************************************************************************************
+	***************************************************************************************************************************************
+	***************************************************************************************************************************************
+	*/	
+	
+	//attach an event listener to the file input for selecting image to attach to blog
+    //used to preview the image before uploading
+    $("#logo").change(function(){
+        if($(this).val()){
+            previewImage(this, "prevBlogImg");//function in 'main.js'
         }
     });
 });

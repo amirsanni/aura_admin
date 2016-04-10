@@ -2,6 +2,12 @@
 
 $(document).ready(function(){
     lap_();
+    
+    
+    //TO CHANGE SORT ORDER OR NUMBER OF PAGES SHOWN PER PAGE
+    $("#projListPerPage").change(function(){
+        lap_();
+    });
 });
 
 
