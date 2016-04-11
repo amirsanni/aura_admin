@@ -194,7 +194,7 @@ $(document).ready(function(){
                     $("#titleErr").html(returnedData.blogname);
                     $("#bodyErr").html(returnedData.first_name);
                     $("#authorErr").html(returnedData.last_name);
-                    $("#logoErr").html(returnedData.logo);
+                    $("#logoErr").html(returnedData.logo_error);
                 }
             }).fail(function(){
                 if(!navigator.onLine && (appRoot.search("localhost") > -1)){
@@ -410,7 +410,7 @@ function editBlog(id){
     $("#allBlogs").on('click', '.suspendBlog', function(){
         var clickedElemIcon = $(this).children('i');
         
-        var blogId = $(this).parent().prev().prop("id").split("-")[1];
+        var blogId = $(this).prop("id").split("-")[1];
         var ns = clickedElemIcon.hasClass('fa fa-toggle-on') ? 0 : 1;
         
         if(blogId){
