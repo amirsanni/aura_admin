@@ -123,7 +123,12 @@ class Blogs extends CI_Controller {
 
         $this->output->set_content_type('application/json')->set_output(json_encode($json));
     }
-
+	
+    
+    
+    
+    
+    
     private function upload_logo($file) {
         $json = [];
 
@@ -309,6 +314,9 @@ class Blogs extends CI_Controller {
 
         $this->output->set_content_type('application/json')->set_output(json_encode($json));
     }
+    
+    
+    
 
     /**
      * cbps = "Change blog published status"

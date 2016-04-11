@@ -220,6 +220,12 @@ class Users extends CI_Controller{
     */
     
     
+    /**
+     * 
+     * @param array $file the image to upload
+     * @param string $email email of user with logo we are about to upload
+     * @return array $json
+     */
     private function upload_logo($file, $email){
         $json = [];
         

@@ -28,12 +28,12 @@ defined('BASEPATH') OR exit('Get out of here');
                             <option value="title-ASC" selected>Title (A to Z)</option>
                             <option value="title-DESC">Title (Z to A)</option>
                             <option value="date_created-ASC">Date (oldest first)</option>
-                            <option value="date_created-DESC">Date (recent first)</option>
+                            <option value="date_created-DESC" selected>Date (recent first)</option>
                         </select>
                     </div>
                     <div class="col-sm-4 form-inline form-group-sm">
                         <label for="projSearch"><i class="fa fa-search"></i></label>
-                        <input type="search" id="custSearch" placeholder="Search Projects" class="form-control">
+                        <input type="search" id="projSearch" placeholder="Search Projects" class="form-control">
                     </div>
                 </div>
             </div>

@@ -1,6 +1,5 @@
 <?php
 defined('BASEPATH') OR exit('Access Denied');
-require_once './application/controllers/functions.php';
 
 /**
  * Description of Genlib
@@ -48,6 +47,8 @@ class Genlib {
         return $send_email ? TRUE : FALSE;
     }
 	
+    
+    
 
 
     public function checkLogin() {
@@ -128,5 +129,14 @@ class Genlib {
         
         
         return $config;
+    }
+    
+    
+    
+    /**
+     * 
+     */
+    public function get_default_email(){
+    	return "info@designaura.net";
     }
 }

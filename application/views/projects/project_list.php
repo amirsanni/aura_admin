@@ -23,9 +23,9 @@ defined('BASEPATH') OR exit('Get out');
             <tbody>
                 <?php foreach($project_list as $get):?>
                     <tr>
-                        <th><?=$sn?>.</th>
+                        <th class='projSn'><?=$sn?>.</th>
                         <td><a href="projects/<?=$get->id?>"><?=$get->title?></a></td>
-                        <td><?=$get->description?></td>
+                        <td><?=word_limiter($get->description, 25)?></td>
                         <td><?=$get->category?></td>
                         <td><a href="mailto:<?=$get->creator_email?>"><?=$get->username?></a></td>
                         <td><?=date('jS M, Y h:ia', strtotime($get->date_created))?></td>
@@ -34,7 +34,8 @@ defined('BASEPATH') OR exit('Get out');
                                 <i class="<?= $get->published == 1 ? 'fa fa-toggle-on' : 'fa fa-toggle-off'?>"></i>
                             </a>
                         </td>
-                        <td><button class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>Delete</button></td>
+                        <td><button class="btn btn-danger btn-sm delProj"><i class="fa fa-trash"></i> Delete</button></td>
+                        <input type='hidden' value='<?=$get->id?>'>
                     </tr>
                     <?php $sn++;?>
                 <?php endforeach;?>
@@ -42,7 +43,7 @@ defined('BASEPATH') OR exit('Get out');
         </table>
     </div>
     <?php else:?>
-    No Projects
+    No Projects Found
     <?php endif; ?>
 </div>
 <!-- Pagination -->

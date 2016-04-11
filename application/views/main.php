@@ -5,22 +5,47 @@ defined('BASEPATH') OR exit('');
 <!DOCTYPE HTML>
 <html>
     <head>
-        <title><?= $pageTitle ?></title>
-        <!-- CSS -->
-        <link rel="stylesheet" href="<?= base_url() ?>public/bootstrap/css/bootstrap.min.css">
-        <link rel="stylesheet" href="<?= base_url() ?>public/bootstrap/css/bootstrap-theme.min.css">
-        <link rel="stylesheet" href="<?= base_url() ?>public/font-awesome/css/font-awesome.min.css">
-        <link rel="stylesheet" href="<?= base_url() ?>public/font-awesome/css/font-awesome-animation.min.css">
-        <link rel="stylesheet" href="<?= base_url() ?>public/css/main.css">
-
-        <!-- JS -->
-        <script src="<?= base_url() ?>public/js/jquery.min.js"></script>
-        <script src="<?= base_url() ?>public/bootstrap/js/bootstrap.min.js"></script>
-        <script src="<?= base_url() ?>public/js/main.js"></script>
+        <title><?= $pageTitle ?></title>        
+        
+        <!--- LOAD FILES --->
+	    <?php if($_SERVER['HTTP_HOST'] == "localhost"): ?>
+	        <link rel="stylesheet" href="public/css/open_sans.css">
+	        <link rel="stylesheet" href="public/bootstrap/css/bootstrap.min.css">
+	        <link rel="stylesheet" href="public/bootstrap/css/bootstrap-theme.min.css" media="screen">
+	        <link rel="stylesheet" href="public/font-awesome/css/font-awesome.min.css">
+	        <link rel="stylesheet" href="public/font-awesome/css/font-awesome-animation.min.css">
+	        
+	        <script src="public/js/jquery.min.js"></script>
+	    	<script src="public/bootstrap/js/bootstrap.min.js"></script>
+	        
+		<?php else: ?>
+	        <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+	        <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+	        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+	        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+	        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome-animation/0.0.8/font-awesome-animation.min.css">
+	        
+	        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+	    	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	    
+		<?php endif; ?>
+	        
+	    <!-- Custom styles -->
+		<link rel="stylesheet" href="public/css/main.css">
+		
+		<!-- custom js -->
+		<script src="public/js/main.js"></script>
+	        
+	    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	    <!--[if lt IE 9]>
+	        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+	        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+	    <![endif]-->
     </head>
 
     <body>
-        Memory Usage: {memory_usage} &nbsp; elapased Time: {elapsed_time} &nbsp;&nbsp; Shown for debugging purposes
         <nav class="navbar navbar-default">
             <div class="container-fluid">
                 <!-- Brand and toggle get grouped for better mobile display -->
