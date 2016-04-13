@@ -56,17 +56,3 @@ defined('BASEPATH') OR exit('Get out');
     <?php echo isset($links) ? $links : ""?>
 </div>
 <!-- Pagination ends -->
-<?php
-function LimitCharacter($data,$limit = 20)
-{
-    if (strlen($data) > $limit)
-    {
-        $data = substr($data, 0, strrpos(substr($data, 0, $limit), ' ')) . '...';
-        return $data;
-    }
-    else
-    {
-        return $data;
-    }
-}
-?>

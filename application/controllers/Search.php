@@ -18,7 +18,7 @@ class Search extends CI_Controller{
         
         $this->genlib->ajaxOnly();
         
-        $this->load->model(['admin']);
+        $this->load->model(['admin', 'project', 'blogmodel']);
         
         $this->load->helper('text');
         
@@ -34,16 +34,14 @@ class Search extends CI_Controller{
     */
     
     
-    public function index(){
-        /**
-         * function will call models to do all kinds of search just to check whether there is a match for the searched value
-         * in the search criteria or not. This applies only to global search
-         */
-        
-        
-        
-        //set final output
-        $this->output->set_content_type('application/json')->set_output(json_encode($json));
+    /**
+     * ps = "Project Search"
+     */
+    public function ps(){
+    	$data['project_list'] = $this->project->all_proj_search($this->value);
+    	$data['sn'] = 1;
+    	
+    	$this->load->view('projects/project_list', $data);
     }
     
     

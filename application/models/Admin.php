@@ -155,19 +155,19 @@ class Admin extends CI_Model{
     * @param type $new_status New account status
     * @return boolean
     */ 
-   public function suspend($admin_id, $new_status){
-       $q = "UPDATE admin SET account_status = ? WHERE id = ?";
+   	public function suspend($admin_id, $new_status){
+       	$q = "UPDATE admin SET account_status = ? WHERE id = ?";
        
-       $this->db->query($q, [$new_status, $admin_id]);
+       	$this->db->query($q, [$new_status, $admin_id]);
        
-       if($this->db->affected_rows()){
-           return TRUE;
-       }
-       
-       else{
-           return FALSE;
-       }
-   }
+   		if(!$this->db->error()['message']){
+        	return TRUE;
+        }
+        
+        else{
+        	return FALSE;
+        }
+   	}
 
 
    /*
@@ -185,18 +185,18 @@ class Admin extends CI_Model{
     * @return boolean
     */
     public function delete($admin_id, $new_value){
-       $q = "UPDATE admin SET deleted = ? WHERE id = ?";
+       	$q = "UPDATE admin SET deleted = ? WHERE id = ?";
        
-       $this->db->query($q, [$new_value, $admin_id]);
+		$this->db->query($q, [$new_value, $admin_id]);
        
-       if($this->db->affected_rows()){
-           return TRUE;
-       }
-       
-       else{
-           return FALSE;
-       }
-   }
+    	if(!$this->db->error()['message']){
+        	return TRUE;
+        }
+        
+        else{
+        	return FALSE;
+		}
+   	}
 
 
     /*
@@ -244,6 +244,18 @@ class Admin extends CI_Model{
     
     
     
+    
+    /**
+     * 
+     * @param int $admin_id
+     * @param string $first_name
+     * @param string $last_name
+     * @param string $email
+     * @param string $mobile1
+     * @param string $mobile2
+     * @param string $role
+     * @return boolean
+     */
     public function update($admin_id, $first_name, $last_name, $email, $mobile1, $mobile2, $role){
         $data = ['first_name'=>$first_name, 'last_name'=>$last_name, 'mobile1'=>$mobile1, 'mobile2'=>$mobile2, 'email'=>$email, 
             'role'=>$role];
@@ -252,6 +264,12 @@ class Admin extends CI_Model{
         
         $this->db->update('admin', $data);
         
-        return TRUE;
+        if(!$this->db->error()['message']){
+        	return TRUE;
+        }
+        
+        else{
+        	return FALSE;
+        }
     }
 }

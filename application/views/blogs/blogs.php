@@ -30,8 +30,8 @@ defined('BASEPATH') OR exit('Get out of here');
                         <select id="blogListSortBy" class="form-control">
                             <option value="title-ASC" selected>Title (A to Z)</option>
                             <option value="title-DESC">Title (Z to A)</option>
-                            <option value="created-ASC">Date Created (Ascending)</option>
-                            <option value="created-DESC">Date Created (Descending)</option>
+                            <option value="date_created-ASC">Date Created (Ascending)</option>
+                            <option value="date_created-DESC">Date Created (Descending)</option>
                         </select>
                     </div>
                     <div class="col-sm-3 form-inline form-group-sm">
@@ -122,15 +122,23 @@ defined('BASEPATH') OR exit('Get out of here');
             <div class="modal-body">
                 <form id='addNewBlogForm' name='addNewBlogForm' role='form'>
                     <div class="row">
-                        <div class="form-group-sm col-sm-4">
+                        <div class="form-group-sm col-sm-12">
                             <label for='title' class="control-label">Title</label>
                             <input type="text" id='title' class="form-control checkField" placeholder="Title">
                             <span class="help-block errMsg" id="titleErr"></span>
                         </div>
                     </div>
                     
+					<div class="row">
+                        <div class="form-group-sm col-sm-12">
+                            <label for='author' class="control-label">Author</label>
+                            <input type="text" id='author' class="form-control checkField" placeholder="Author">
+                            <span class="help-block errMsg" id="authorErr"></span>
+                        </div>
+                    </div>
+					
                     <div class="row">
-                        <div class="form-group-sm col-sm-9">
+                        <div class="form-group-sm col-sm-12">
                             <label for='body' class="control-label">Body</label>
                             <textarea id='body' class="form-control checkField" placeholder="Add Blog Content" rows="5" cols="40"></textarea>
                             <span class="help-block errMsg" id="bodyErr"></span>
@@ -138,17 +146,11 @@ defined('BASEPATH') OR exit('Get out of here');
                     </div>
                     
                     <div class="row">
-                        <div class="form-group-sm col-sm-4">
-                            <label for='author' class="control-label">Author</label>
-                            <input type="text" id='author' class="form-control checkField" placeholder="Author">
-                            <span class="help-block errMsg" id="authorErr"></span>
-                        </div>
-                    </div>
-                    
-                    <div class="row">
                         <div class="col-sm-12">
+							<center><img src="" class="img-responsive" id="prevBlogImg"></center>
                             <label>Blog Image(max file size; 500kb):</label>
                             <input type="file" id='logo' class="form-control">
+							<span class='help-block errMsg' id='logoErr'></span>
                         </div>
                     </div>
                 </form>
