@@ -139,16 +139,15 @@ class Blogs extends CI_Controller {
              * will be used as the name of the user's folder
              */
 
-            //make dir to upload logo
-            if (!file_exists("../blog_images")) {
-                mkdir("../blog_images");
+            //make dir to upload blog images
+            if (!file_exists("../aura_images/blog_images")) {
+                mkdir("../aura_images/blog_images");
             }
 
-            $config['file_name'] = "my_logo"; //use this as the name of all user's logos
-            $config['upload_path'] = "../blog_images/"; //files are stored outside the app root
-            $config['allowed_types'] = 'jpg|png|jpeg|jpe';
+            $config['upload_path'] = "../aura_images/blog_images/"; //files are stored outside the app root
+            $config['allowed_types'] = 'jpg|png|jpeg|jpe|gif';
             $config['file_ext_tolower'] = FALSE;
-            $config['encrypt_name'] = TRUE;
+            $config['encrypt_name'] = FALSE;
             $config['max_size'] = 500; //in kb
 
             $this->load->library('upload', $config); //load CI's 'upload' library

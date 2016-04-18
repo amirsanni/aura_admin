@@ -14,7 +14,11 @@ class Download extends CI_Controller{
     }
     
     
-    
+    /**
+     * 
+     * @param string $stringified_email
+     * @param string $img_name
+     */
     public function logo($stringified_email, $img_name){
         $img_full_link = "../aura_users/{$stringified_email}/$img_name";//set image full link
         $ext = "." . explode('.', $img_name)[1];//get the image's extension
@@ -25,8 +29,14 @@ class Download extends CI_Controller{
     }
     
     
+    
+    /**
+     * 
+     * @param string $img_name
+     */
     public function blog($img_name){
-        $img_full_link = "../blog_images/$img_name";//set image full link
+        $img_full_link = "../aura_images/blog_images/$img_name";//set image full link
+        
         $ext = "." . explode('.', $img_name)[1];//get the image's extension
         
         if(file_exists($img_full_link)){
