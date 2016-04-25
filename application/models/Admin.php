@@ -66,7 +66,7 @@ class Admin extends CI_Model{
         
         $this->db->query($q, [$admin_id]);
         
-        if(!$this->db->error()){
+        if(!$this->db->error()['message']){
             return TRUE;
         }
         

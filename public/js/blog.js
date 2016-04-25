@@ -19,13 +19,6 @@ $(document).ready(function(){
         lab_();
     });
     
-    
-    
-    //to view a blog's project list
-    $("#blogInfo").on('click', '.vup', function(){
-        vup_();
-    });
-    
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -273,7 +266,12 @@ $(document).ready(function(){
                     
                     //reset all error msgs in case they are set
                     changeInnerHTML(['titleEditErr', 'bodyEditErr', 'authorEditErr'], "");
-                    
+					
+					//reload blog list to reflect changes
+					lab_();
+					
+					//trigger the close event to close the edit page and reshow the blog lists
+                    $("#closeEditBlog").click();
                 }
                 
                 else{

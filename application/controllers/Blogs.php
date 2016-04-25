@@ -73,12 +73,12 @@ class Blogs extends CI_Controller {
 
         $data['title'] = 'Create a blog item';
 
-        $this->form_validation->set_rules('title', 'Title', ['strtolower', 'ucfirst', 'required'], ['required' => "required"]);
+        $this->form_validation->set_rules('title', 'Title', ['strtolower', 'ucwords', 'required'], ['required' => "required"]);
         $this->form_validation->set_rules('body', 'Text', 'required', ['required' => "required"]);
-        $this->form_validation->set_rules('author', 'Author', ['max_length[30]', 'strtolower', 'ucfirst', 'required'], ['required' => "required"]);
+        $this->form_validation->set_rules('author', 'Author', ['max_length[30]', 'strtolower', 'ucwords', 'required'], ['required' => "required"]);
 
         if ($this->form_validation->run() !== FALSE) {
-
+			
             //move logo to disk and get url if logo was uploaded
             if (!empty($_FILES['logo']['tmp_name'])) {
                 /*
@@ -134,14 +134,9 @@ class Blogs extends CI_Controller {
 
         if (!empty($file)) {
 
-            /*
-             * We replace the '.' and '@' chars from the email to prevent folder naming error as it
-             * will be used as the name of the user's folder
-             */
-
             //make dir to upload blog images
             if (!file_exists("../aura_images/blog_images")) {
-                mkdir("../aura_images/blog_images");
+                mkdir("../aura_images/blog_images", 0644, TRUE);
             }
 
             $config['upload_path'] = "../aura_images/blog_images/"; //files are stored outside the app root
@@ -190,12 +185,13 @@ class Blogs extends CI_Controller {
 
         $this->form_validation->set_error_delimiters('', '');
 
-        $this->form_validation->set_rules('title', 'Title', ['strtolower', 'ucfirst', 'required'], ['required' => "required"]);
+        $this->form_validation->set_rules('title', 'Title', ['strtolower', 'ucwords', 'required'], ['required' => "required"]);
         $this->form_validation->set_rules('body', 'Text', 'required', ['required' => "required"]);
-        $this->form_validation->set_rules('author', 'Author', ['max_length[30]', 'strtolower', 'ucfirst', 'required'], ['required' => "required"]);
+        $this->form_validation->set_rules('author', 'Author', ['max_length[30]', 'strtolower', 'ucwords', 'required'], ['required' => "required"]);
         $blog_id = $this->input->post('id', TRUE);
 
         if ($this->form_validation->run() !== FALSE) {
+			
             $this->db->trans_start();
             //move logo to disk and get url if logo was uploaded
             if (!empty($_FILES['logo']['tmp_name'])) {
