@@ -9,6 +9,7 @@ var spinnerClass = 'fa fa-spinner faa-spin animated';
  */
 var appRoot = setAppRoot("aura_admin", "");
 
+
 $(document).ready(function(){
     //for tooltips
     $('[data-toggle="tooltip"]').tooltip();
@@ -341,10 +342,18 @@ function setAppRoot(devFolderName, prodFolderName){
      */
     
     //attach trailing slash to both foldernames
-    var devFolder = devFolderName+"/";
-    var prodFolder = prodFolderName+"/";
+    var devFolder = devFolderName ? devFolderName+"/" : "";
+    var prodFolder = prodFolderName ? prodFolderName+"/" : "";
     
-    var baseURL = hostname === "localhost" ? window.location.origin+"/"+devFolder : window.location.origin+"/"+prodFolder;
+    var baseURL = "";
+    
+    if(hostname === "localhost" || (hostname.search("192.168.0.") !== -1) || (hostname.search("127.0.0.") !== -1)){
+        baseURL = window.location.origin+"/"+devFolder;
+    }
+    
+    else{
+        baseURL = window.location.origin+"/"+prodFolder;
+    }
     
     return baseURL;
 }
