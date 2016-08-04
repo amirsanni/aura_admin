@@ -136,7 +136,7 @@ class Blogs extends CI_Controller {
 
             //make dir to upload blog images
             if (!file_exists("../aura_images/blog_images")) {
-                mkdir("../aura_images/blog_images", 0644, TRUE);
+                mkdir("../aura_images/blog_images", 0755, TRUE);
             }
 
             $config['upload_path'] = "../aura_images/blog_images/"; //files are stored outside the app root
